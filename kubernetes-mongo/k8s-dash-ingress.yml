@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dashboard-ingress
+  namespace: kubernetes-dashboard # add it for this specific namespace that we installed 
+  annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      nginx.ingress.kubernetes.io/configuration-snippet: |-
+        proxy_ssl_server_name on;
+        proxy_ssl_name $host;
+spec:
+  # tls:
+  # - hosts:
+  #   - dashboard.mk
+  #   secretName: tls-secret
+  rules:
+  - host: dashboard.mk
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: kubernetes-dashboard
+            port: 
+              number: 443 # check the service that is already defined in the namespace service

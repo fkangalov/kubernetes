@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: route-by-path
+  labels:
+    name: route-by-path
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2 # we need this to make rewrites 
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: services.mk
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/service-a(/|$)(.*)"
+        backend:
+          service:
+            name: service-a
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: "/service-b(/|$)(.*)"
+        backend:
+          service:
+            name: service-b
+            port: 
+              number: 80

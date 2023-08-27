@@ -1,0 +1,11 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: application-cpu
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: application-cpu # this is the name of our deployment it is important to be the same as the one we already have
+  updatePolicy:
+    updateMode: "Auto" # this is set to "ON" if we want to automatically let VPA apply the recommendations, otherwise we can descript this vpa and we will see the recommendation that we can apply ourselves

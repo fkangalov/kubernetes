@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx # this is the app name for the deployment to which we are connecting
+  ports:
+    - protocol: TCP
+      port: 80 # the port on which the service will be running
+      targetPort: 8080 # the target port is the actual port the deployment/pod is running at from the config file above
